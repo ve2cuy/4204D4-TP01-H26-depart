@@ -1,0 +1,9 @@
+# ===================================================================================
+# Monitoring avec Dockmon
+# https://github.com/darthnorse/dockmon/wiki/Installation#docker-compose-recommended
+# Accès par défaut: admin / dockmon123
+# Utilise le volume dockmon-data pour stocker les données
+# ===================================================================================
+
+#services:
+#  dockmon:

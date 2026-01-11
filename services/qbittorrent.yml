@@ -1,0 +1,15 @@
+# Note: Pour obtenir le mot de passe initial, 
+# consulter les logs du conteneur qBittorrent.
+# $ docker logs qbittorrent
+#******** Information ********
+# To control qBittorrent, access the WebUI at: http://localhost:8080
+# The WebUI administrator username is: admin
+# The WebUI administrator password was not set. 
+# A temporary password is provided for this session: QMdGVy98I
+# You should set your own password in program preferences.
+# Voir: Préférences -> Web UI -> Mot de passe
+# Et redémmarer le conteneur après avoir changé le mot de passe.
+# --------------------------------------------------------------
+
+#services:
+#  qbittorrent:

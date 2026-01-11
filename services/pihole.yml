@@ -1,0 +1,36 @@
+# ----------------------------------------------------------------------------------------------
+# Fichier:  pihole.yml
+# Projet:   4204D4 H26 TP01
+# Auteur:   Alain Boudreault
+# Date:     2026.01.11
+# ----------------------------------------------------------------------------------------------
+# Service Pi-hole - Serveur de blocage de publicités et de suivi au niveau DNS
+# Sera configuré pour utiliser une adresse IP statique dans le réseau projet_network
+# Et sera utilisé comme serveur DNS par le service alpine pour les tests.
+# ----------------------------------------------------------------------------------------------
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      # Ports DNS
+      - "${PIHOLE_DNS_PORT}:53/tcp"
+      - "${PIHOLE_DNS_PORT}:53/udp"
+      # Accès Web via HTTP
+      - "${PIHOLE_HTTP_PORT}:80/tcp"
+      # Accès Web via HTTPS
+      - "${PIHOLE_HTTPS_PORT}:443/tcp"
+    environment:
+      # Le timezone à utiliser
+      TZ: 'America/Montreal'
+      # Mot de passe pour l'accès Web
+      FTLCONF_webserver_api_password: 'password'
+      # If using Docker's default `bridge` network setting the dns listening mode should be set to 'ALL'
+      # FTLCONF_dns_listeningMode: 'ALL'
+    volumes:
+      - '../volumes/etc-pihole:/etc/pihole'
+    restart: unless-stopped
+    networks:
+      projet_network:
+        ipv4_address: ${DNS_IP:-0.0.0.0}
+# -------------------------------------- FIN Pi-hole

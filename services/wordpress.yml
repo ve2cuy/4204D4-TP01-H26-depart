@@ -1,0 +1,24 @@
+# WordPress, phpmyadmin et MariaDB
+# Il faut utiliser les variables d'environnement
+# Pour l'accès à la BD et la configuration de WordPress
+# WordPress et phpmyadmin dépendent de la base de données MariaDB
+# Le réseau reseauWP est utilisé pour isoler les services WordPress, phpmyadmin et MariaDB
+
+#services:
+#  mariadb:
+#    networks:
+#      - reseauWP
+  # <-------------------------------------- FIN
+
+#  wordpress:
+    #build:
+    #  context: 
+    #  dockerfile: 
+#    networks:
+#      - reseauWP
+  # <-------------------------------------- FIN
+
+#  phpmyadmin:
+#    networks:
+#      - reseauWP
+  # <-------------------------------------- FIN

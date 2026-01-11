@@ -1,0 +1,36 @@
+# ==========================================================
+# Fichier principal docker-compose.yml du projet
+# ==========================================================
+include:
+- ./services/init-dashboard.yml
+- ./services/arcane.yml
+- ./services/uptime-kuma.yml
+- ./services/homepage.yml
+- ./services/alpine.yml
+- ./services/pihole.yml
+- ./services/wordpress.yml
+- ./services/radarr.yml
+- ./services/qbittorrent.yml
+- ./services/portainer.yml
+- ./services/dockmon.yml
+- ./services/nginx.yml
+
+ 
+# ===========================================
+# Les réseaux de l'application
+# ===========================================
+networks:
+
+  reseauWP:
+    name: reseauWP
+    driver: bridge
+
+  # Ce réseau est utilisé par Pi-hole pour fixé une adresse IP statique
+  # C'est requis car la directive dns: dans le service ngnix a besoin de l'adresse IP
+  # Il n'est pas possible d'utiliser le nom du service pihole dans 'dns: ...'
+  projet_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "172.30.0.0/16"        
+# ===========================================

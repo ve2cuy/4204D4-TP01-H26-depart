@@ -1,0 +1,15 @@
+# =========================================================================
+# Uptime Kuma - Surveillance de l'état des services
+# -------------------------------------------------------------------------
+# Pour Portainer, il faut écouter sur le port 9000
+# =========================================================================
+# Note: Pour configurer le widget Uptime Kuma dans le tableau de bord,
+# Il faudra créer un groupe de statuts et une page de statuts dans Uptime Kuma.
+# et utiliser le "slug" de la page de statuts dans le fichier init-dashboard.yml
+# slug: page-de-statuts 
+# Voir la documentation à 
+# https://gethomepage.dev/widgets/services/uptime-kuma/
+
+
+#services:
+#  uptimekuma:

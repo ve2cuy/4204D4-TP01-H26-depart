@@ -1,0 +1,22 @@
+services:
+  # Application Homepage qui attend que l'init soit terminé avant de démarrer
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - "${HOMEGAGE_PORT}:3000"
+    volumes:
+      - ../volumes/homepage-config:/app/config
+      # Pour Windows
+      #- //var/run/docker.sock:/var/run/docker.sock
+      # Pour Linux
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - HOMEPAGE_ALLOWED_HOSTS=*
+    depends_on:
+      homepage-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    networks:
+      - projet_network
+# -------------------------------------- FIN Homepage

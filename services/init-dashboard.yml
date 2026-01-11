@@ -1,0 +1,106 @@
+services:
+
+# Conteneur d'initialisation qui configure le menu de Homepage
+  # Des exemples:
+  # https://github.com/epoch-philosophy/homepage-example
+  # Pour les icones: https://github.com/homarr-labs/dashboard-icons/tree/main/png
+
+  homepage-init:
+    image: alpine:latest
+    container_name: homepage-init
+    environment:
+      - HOST_IP=${HOST_IP}
+
+    volumes:
+      - ../volumes/homepage-config:/data
+    command: |
+      sh -c "
+      echo 'Configuration du menu Homepage...' 
+      mkdir -p /data
+      # ###########################################################
+      # Fichier de configuration des services
+      # ###########################################################
+      cat > /data/services.yaml << 'EOF'
+      ---
+      - Applications du projet:
+
+          - Alpine:
+              icon: beef.png
+              description: Utilise pihole comme DNS pour tester les filtres de blocage
+
+          - Accès à PiHole:
+              # https://gethomepage.dev/widgets/services/pihole/
+              icon: pi-hole.png
+              href: https://${HOST_IP}/admin
+              description: Interface d'administration PiHole
+              server: my-docker # The docker server that was configured
+              container: pihole # The name of the container you'd like to connect
+              showStats: true 
+              target: _self 
+
+              widget:
+                type: pihole
+                # Communication de conteneur à conteneur via le nom du service
+                # Voir la note dans le service pihole
+                url: https://172.30.0.53
+                version: 6
+                # Il faut fournie un token API pour accéder aux statistiques
+                # Voir dans l'application Pi-hole: Settings > API / Web interface 
+                key: password # password ou app password
+
+      EOF
+      # FIN DU FICHIER services.yaml
+      # ---------------------------------------------------------------------------
+
+      # ###########################################################
+      # Fichier de configuration de l'application Homepage
+      # Référence: https://gethomepage.dev/configs/settings/
+      # ###########################################################
+      cat > /data/settings.yaml << 'EOF'
+      ---
+
+      EOF
+      # FIN DU FICHIER settings.yaml
+      # ---------------------------------------------------------------------------
+
+
+      # ###########################################################
+      # Fichier de configuration des bookmarks
+      # ###########################################################
+      cat > /data/bookmarks.yaml << 'EOF'
+      ---
+
+      EOF
+      # FIN DU FICHIER bookmarks.yaml
+      # ---------------------------------------------------------------------------
+
+      # ###########################################################
+      # Fichier de configuration du serveur Docker
+      # ###########################################################
+      # Requis pour le widget Docker
+      cat > /data/docker.yaml << 'EOF'
+      ---
+      my-docker:
+        socket: /var/run/docker.sock      
+      EOF
+      # FIN DU FICHIER docker.yaml
+      # ---------------------------------------------------------------------------
+
+
+      # ###########################################################
+      # Fichier de configuration des widgets
+      # ###########################################################
+      cat > /data/widgets.yaml << 'EOF'
+      ---
+
+      EOF
+      # FIN DU FICHIER widgets.yaml
+      # ---------------------------------------------------------------------------
+
+      echo 'Configuration terminée avec succès!' 
+      "
+    restart: "no"
+    
+    networks:
+      - projet_network    
+  # Fin du conteneur d'initialisation pour Homepage

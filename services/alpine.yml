@@ -1,0 +1,30 @@
+# ----------------------------------------------------------------------------------------------
+# Fichier:  alpine.yml
+# Projet:   4204D4 H26 TP01
+# Auteur:   Alain Boudreault
+# Date:     2026.01.11
+# ----------------------------------------------------------------------------------------------
+# Service de test Alpine utilisant Pi-hole comme DNS
+# ----------------------------------------------------------------------------------------------
+services:
+  alpine:
+    image: alpine
+    container_name: alpine
+    dns:
+      -  ${DNS_IP:-0.0.0.0}      
+    command: >
+      sh -c "
+      while true; do
+        # Lire un site autorisé via pihole
+        echo '[$(date)] Test wget sur google.com via pihole...';
+        wget google.com || echo 'Requête échouée, le fichier index.html est probablement déjà présent...';
+        sleep 5;
+        # Lire un site bloqué via pihole
+        echo '[$(date)] Tester doubleclick.net via pihole...';
+        wget doubleclick.net && echo 'La Requête a réussi (étrange - site bloqué!)' || echo 'La requête a échoué (site bloqué)'; 
+        sleep 5;    
+      done
+      "      
+    restart: unless-stopped
+    networks:
+      - projet_network

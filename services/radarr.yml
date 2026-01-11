@@ -1,0 +1,8 @@
+# Il faut obtenir la clé API Radarr pour configurer le widget dans le tableau de bord.
+# Pour obtenir la clé API, accéder à Radarr après le démarrage du conteneur:
+# http://localhost:7878
+# Aller dans Settings -> General -> Security -> API Key
+# Copier la clé API et la coller dans le fichier init-dashboard.yml
+
+#services:
+#  radarr:
