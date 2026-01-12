@@ -15,13 +15,14 @@
 
 * Arcane
 * Dockmon
+* MariaDB
 * PhpMyAdmin
+* Wordpress
 * Pihole
 * Portainer
 * qbitTorrent
 * Radarr
 * Uptime Kuma
-* Wordpress
 * Ngnix
 * Alpine
 
@@ -39,10 +40,10 @@
 
 ### 2.1 - Voici le contenu requis sur Homepage
 
-* Votre photo ou avatar en haut de l'écran.
-* La valeur des actions de la bourse, stockées dans la variable `À définir`.
+* Votre photo ou avatar en haut de l'écran, renseignée dans la variable `URL_PHOTO`
+* La valeur des actions de la bourse, stockées dans la variable `PORTEFEUILLE_ACTIONS`.
 * Date et heure du jour.
-* Température de la ville, par lat et long, renseignée par les variables: `METEO_VILLE`, `METEO_LONG` et `METEO_LAT`.
+* Température de la ville, par latitude et longitude, renseignée par les variables: `METEO_VILLE`, `METEO_LONG` et `METEO_LAT`.
 
 <img src="./images/homepage-haut.png" alt="YAML" width="750" />
 
@@ -80,7 +81,7 @@ Dans l'exemple suivant, il est possible de suivre les statistiques de blocages d
 * Pihole (💡déjà fait dans le projet de départ)
 * qBitTorrent
 * Radarr
-* Uptime Kuma (défi supplémentaire, voir la docum sur Homepage)
+* Uptime Kuma (défi supplémentaire, voir la documentation sur Homepage)
 
 👉 NOTE: L'API PiHole affiche la zone suivante:
 
@@ -105,6 +106,8 @@ include:
 ```
 
 💡NOTE: Le projet de départ est fonctionnel et propose déjà les services `Alpine` et `Pihole` via `Homepage`.
+
+👉 IMPORTANT, Si vous clonez le projet, dans le but de faire un push vers votre propre dépot, il est IMPORTANT de préserver le fichier  `.gitignore ` dans quoi, le contenu des dossiers volumes sera téléversé vers le dépôt.  Cela représente un important volume de données.
 
 ---
 
@@ -136,7 +139,7 @@ services:
 👉 Il faudra renseigner `HOST_IP` en fonction de votre environnement de développement.
 
 
-**💡IMPORTANT** -> TOUS les `ports` exposés des services doivent-être renseignés par une variables du fichiers `.env`. Il faut être en mesure de pouvoir changer les `ports`, ainsi que l'`adresse IP` du système, sans avoir à modifier les fichiers `yml` des services et de l'application `Homepage`.
+**💡IMPORTANT** -> TOUS les `ports` exposés des services doivent-être renseignés par une variables du fichiers `.env`. Il faut être en mesure de pouvoir changer les `ports`, ainsi que l'`adresse IP` du système, sans avoir à modifier les fichiers `yml` des services et de l'application `Homepage`. Même chose pour votre photo, le portefeuille d'actions, la langue d'affichage de Homepage, ...
 
 🛑 Lors de la correction, un fichier `.env` différent sera utilisé.
 
@@ -144,7 +147,7 @@ services:
 
 ## 4 - Les fichiers de configuration de `Homepage`
 
-Les fichiers de configuration de l'application `Homepage` doivent être générés dynamiquement par programmation.
+Les fichiers de configuration de l'application `Homepage` doivent être générés dynamiquement par programmation (`sh`).
 
 Pour ce faire, il faudra utiliser un service d'initialisation, utilisant le même volume que le service `Homepage`, pour créer les fichiers de l'application.
 
@@ -174,9 +177,11 @@ Par exemple, pour le thème:
 
 Le fichier `nginx.yml` doit contenir deux (2) services: `nginx` et `init-nginx`.
 
-Le service `init-nginx` doit créer, par programmation, une page d'accueil web (index.html) avec le contenu de votre choix.
+Le service `init-nginx` doit créer, par programmation (`sh`), une page d'accueil web (index.html) avec le contenu de votre choix.
 
 Le service `nginx` doit-être dépendant du succès du service `init-nginx`.
+
+Il ne faut pas créer de dossier dans volumes, il faut plutôt utiliser un volume Docker.
 
 ---
 
