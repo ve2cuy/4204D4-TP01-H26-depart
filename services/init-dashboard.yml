@@ -42,11 +42,11 @@ services:
                 type: pihole
                 # Communication de conteneur à conteneur via le nom du service
                 # Voir la note dans le service pihole
-                url: https://172.30.0.53
+                url: https://${DNS_IP}
                 version: 6
                 # Il faut fournie un token API pour accéder aux statistiques
                 # Voir dans l'application Pi-hole: Settings > API / Web interface 
-                key: password # password ou app password
+                key: ${PIHOLE_PASSWORD:-password} # password ou app password
 
       EOF
       # FIN DU FICHIER services.yaml
